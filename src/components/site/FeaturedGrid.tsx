@@ -12,9 +12,9 @@ const CAT_LABEL: Record<string, string> = {
   suino: "Suíno", aves: "Aves", outros: "Outros",
 };
 
-export function FeaturedGrid({ category = "all" }: { category?: string }) {
+export function FeaturedGrid({ category = "all", searchQuery }: { category?: string; searchQuery?: string }) {
   const { data: animals, isLoading } = useQuery({
-    queryKey: ["featured-animals", category],
+    queryKey: ["featured-animals", category, searchQuery],
     queryFn: async () => {
       let q = supabase
         .from("animals")
@@ -23,6 +23,10 @@ export function FeaturedGrid({ category = "all" }: { category?: string }) {
       
       if (category !== "all") {
         q = q.eq("category", category as any);
+      }
+
+      if (searchQuery) {
+        q = q.ilike("title", `%${searchQuery}%`);
       }
       
       const { data, error } = await q

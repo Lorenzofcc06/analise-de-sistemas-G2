@@ -1,3 +1,8 @@
+import { initOpenTelemetry } from "../otel";
+if (typeof window !== 'undefined') {
+  initOpenTelemetry();
+}
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,

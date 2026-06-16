@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logger } from "@/lib/logger";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ArrowLeft } from "lucide-react";
@@ -99,9 +100,11 @@ function AnunciarPage() {
         images: finalImageUrl ? [finalImageUrl] : [],
       });
       if (error) throw error;
+      logger.info("Anúncio criado com sucesso", { category: form.category, hasImage: !!finalImageUrl });
       toast.success("Anúncio publicado!");
       navigate({ to: "/meus-anuncios" });
     } catch (err: any) {
+      logger.error("Erro ao publicar anúncio", err, { form });
       toast.error(err?.message ?? "Erro ao publicar");
     } finally {
       setLoading(false);

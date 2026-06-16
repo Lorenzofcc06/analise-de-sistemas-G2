@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { logger } from "@/lib/logger";
 
 import { toast } from "sonner";
 import { Logo } from "@/components/site/Logo";
@@ -40,6 +41,7 @@ function AuthPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        logger.info("Usuário fez login na plataforma", { email });
         toast.success("Bem-vindo!");
         navigate({ to: "/meus-anuncios" });
       } else {
@@ -52,9 +54,11 @@ function AuthPage() {
           },
         });
         if (error) throw error;
+        logger.info("Nova conta criada", { email, userType });
         toast.success("Conta criada! Verifique seu e-mail para confirmar.");
       }
     } catch (err: any) {
+      logger.error("Falha na autenticação (email/senha)", err, { email, mode });
       toast.error(err?.message ?? "Erro ao autenticar");
     } finally {
       setLoading(false);

@@ -28,14 +28,27 @@ export function Header() {
         </Link>
 
         <div className="flex flex-1 items-center gap-2 max-w-2xl mx-auto">
-          <div className="relative flex-1">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              const q = formData.get("q") as string;
+              if (q) {
+                navigate({ to: "/", search: { q } });
+              } else {
+                navigate({ to: "/", search: {} });
+              }
+            }}
+            className="relative flex-1"
+          >
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
+              name="q"
               type="text"
               placeholder="Buscar por espécie, raça, cidade ou anunciante"
               className="w-full rounded-full border border-border bg-secondary py-2.5 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:bg-card transition"
             />
-          </div>
+          </form>
         </div>
 
         <nav className="hidden md:flex items-center gap-2">

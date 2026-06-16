@@ -9,6 +9,11 @@ import { CTA } from "@/components/site/CTA";
 import { Footer } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>): { q?: string } => {
+    return {
+      q: typeof search.q === "string" ? search.q : undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "RuralPlace — Marketplace de Compra e Venda de Animais" },
@@ -28,6 +33,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { q } = Route.useSearch();
   const [category, setCategory] = useState("all");
 
   return (
@@ -38,7 +44,7 @@ function Index() {
         <div className="py-6">
           <Categories active={category} onSelect={setCategory} />
         </div>
-        <FeaturedGrid category={category} />
+        <FeaturedGrid category={category} searchQuery={q} />
         <TrustSection />
         <CTA />
       </main>

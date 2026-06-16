@@ -32,10 +32,10 @@ function MyListings() {
   });
 
   async function toggleStatus(id: string, current: string) {
-    const next = current === "ativo" ? "pausado" : "ativo";
+    const next = current === "ativo" ? "vendido" : "ativo";
     const { error } = await supabase.from("animals").update({ status: next }).eq("id", id);
     if (error) return toast.error(error.message);
-    toast.success(next === "ativo" ? "Anúncio reativado" : "Anúncio pausado");
+    toast.success(next === "ativo" ? "Anúncio reativado" : "Marcado como vendido");
     qc.invalidateQueries({ queryKey: ["my-animals"] });
   }
 
@@ -131,7 +131,7 @@ function MyListings() {
                     className="inline-flex items-center justify-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold hover:bg-secondary transition"
                   >
                     {a.status === "ativo" ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
-                    {a.status === "ativo" ? "Pausar" : "Ativar"}
+                    {a.status === "ativo" ? "Vendido" : "Reativar"}
                   </button>
                   <button
                     onClick={() => remove(a.id)}
