@@ -6,6 +6,7 @@ import { Footer } from "@/components/site/Footer";
 import { Plus, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import { getImageUrl } from "@/lib/utils";
 import { toast } from "sonner";
+import { faro } from '@grafana/faro-web-sdk';
 
 export const Route = createFileRoute("/_authenticated/meus-anuncios")({
   component: MyListings,
@@ -36,6 +37,10 @@ function MyListings() {
     const { error } = await supabase.from("animals").update({ status: next }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success(next === "ativo" ? "Anúncio reativado" : "Marcado como vendido");
+    
+    // Rastreamento: Empurra a ação do produtor para o Grafana Faro
+    faro.api.pushEvent(next === "ativo" ? 'anuncio_reativado' : 'anuncio_vendido', { id_do_animal: id });
+    
     qc.invalidateQueries({ queryKey: ["my-animals"] });
   }
 
@@ -127,6 +132,7 @@ function MyListings() {
                     <Pencil className="h-3 w-3" /> Editar
                   </Link>
                   <button
+                    data-faro-user-action-name="Alternar_Status_Anuncio"
                     onClick={() => toggleStatus(a.id, a.status)}
                     className="inline-flex items-center justify-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold hover:bg-secondary transition"
                   >
@@ -134,6 +140,7 @@ function MyListings() {
                     {a.status === "ativo" ? "Vendido" : "Reativar"}
                   </button>
                   <button
+                    data-faro-user-action-name="Excluir_Anuncio"
                     onClick={() => remove(a.id)}
                     className="inline-flex items-center justify-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-[color:var(--danger)] hover:bg-secondary transition"
                   >

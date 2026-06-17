@@ -5,6 +5,7 @@ import { Logo } from "./Logo";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { faro } from '@grafana/faro-web-sdk';
 
 export function Header() {
   const { user, loading } = useAuth();
@@ -29,11 +30,14 @@ export function Header() {
 
         <div className="flex flex-1 items-center gap-2 max-w-2xl mx-auto">
           <form
+            data-faro-user-action-name="Pesquisa_Header"
             onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
               const q = formData.get("q") as string;
               if (q) {
+                // Rastreamento Manual nos Logs
+                faro.api.pushEvent('pesquisa_realizada', { termoBuscado: q });
                 navigate({ to: "/", search: { q } });
               } else {
                 navigate({ to: "/", search: {} });
