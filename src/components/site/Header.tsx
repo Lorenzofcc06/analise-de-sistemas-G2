@@ -38,9 +38,9 @@ export function Header() {
               if (q) {
                 // Rastreamento Manual nos Logs
                 faro.api.pushEvent('pesquisa_realizada', { termoBuscado: q });
-                navigate({ to: "/", search: { q } });
+                navigate({ to: "/", search: { q }, hash: "anuncios" });
               } else {
-                navigate({ to: "/", search: {} });
+                navigate({ to: "/", search: {}, hash: "anuncios" });
               }
             }}
             className="relative flex-1"

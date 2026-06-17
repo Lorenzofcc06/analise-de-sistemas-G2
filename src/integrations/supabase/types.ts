@@ -132,7 +132,7 @@ export type Database = {
         | "suino"
         | "aves"
         | "outros"
-      animal_sex: "macho" | "femea"
+      animal_sex: "macho" | "femea" | "misto"
       listing_status: "ativo" | "pausado" | "vendido"
       user_type: "produtor" | "comprador" | "ambos"
     }
@@ -271,7 +271,7 @@ export const Constants = {
         "aves",
         "outros",
       ],
-      animal_sex: ["macho", "femea"],
+      animal_sex: ["macho", "femea", "misto"],
       listing_status: ["ativo", "pausado", "vendido"],
       user_type: ["produtor", "comprador", "ambos"],
     },

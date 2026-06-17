@@ -41,7 +41,7 @@ function Index() {
       <Header />
       <main>
         <Hero />
-        <div className="py-6">
+        <div id="anuncios" className="py-6">
           <Categories active={category} onSelect={setCategory} />
         </div>
         <FeaturedGrid category={category} searchQuery={q} />

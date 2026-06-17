@@ -30,7 +30,7 @@ function EditarPage() {
     description: "",
     category: "bovino",
     breed: "",
-    sex: "" as "" | "macho" | "femea",
+    sex: "" as "" | "macho" | "femea" | "misto",
     age_months: "",
     weight_kg: "",
     quantity: "1",
@@ -196,6 +196,7 @@ function EditarPage() {
                 <option value="">—</option>
                 <option value="macho">Macho</option>
                 <option value="femea">Fêmea</option>
+                <option value="misto">Misto / Lote</option>
               </select>
             </div>
             <div>
