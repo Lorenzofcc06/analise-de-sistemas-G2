@@ -1,14 +1,10 @@
 # RuralPlace
 
-## i) Identificação
-**Equipe:** A volta dos que não foram
-
 **Integrantes:**
-- Lorenzo Facco - Programador
+- Lorenzo Facco 
 - Kauã Saraiva - PO
-- Augusto Pasetto - Editor
-- Henrique Beladona - Produtor
-- Luiz Mariano - UI/UX Designer
+- Marcos
+- Luiz Mariano 
 
 
 
